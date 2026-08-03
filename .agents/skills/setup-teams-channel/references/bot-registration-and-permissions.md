@@ -1,58 +1,68 @@
-# The Azure Bot, its Entra app, and the permissions
+# The bot, its Entra app, and the permissions
 
 This phase is **entirely browser work, in the developer's own signed-in session**.
-Two of its steps require privileges the developer may not have — see Phase 0 in
-`SKILL.md` and confirm both *before* creating anything, because both fail late.
+One step requires a privilege the developer may not have — see Phase 0 in
+`SKILL.md` and confirm it *before* creating anything, because it fails late.
+
+## Two routes exist. Only one is worth using.
+
+The Intelligence dashboard's Teams step offers **Open Azure portal**, where a bot
+is an **Azure Bot** — a billed Azure resource that needs a subscription. The
+**Teams Developer Portal** creates an equivalent bot with no subscription at all.
+
+Verified in a tenant holding **zero** Azure subscriptions: the Developer Portal
+route produced the bot, its Entra app registration, a client secret, and the
+messaging endpoint. Use it by default. Mention Azure only if the developer
+already has a subscription and specifically wants that path.
 
 ## Navigate by goal, not by remembered labels
 
-The Azure and Entra portals reorganise often, and the Intelligence Teams setup
+The Developer Portal and Entra reorganise often, and the Intelligence Teams setup
 step is not covered by a published walkthrough. So you cannot pre-load the UI's
 labels, and you must not invent them.
 
 Work by goal, and for each step: **read the page, state what you are about to
-change, get an explicit yes, then act.** Creating an Azure resource, minting a
-client secret, and granting a tenant-wide Graph permission are consequential
-mutations in a live account and, for the third, a tenant-wide one. Never click a
-control you have not read.
+change, get an explicit yes, then act.** Minting a client secret and granting a
+tenant-wide Graph permission are consequential mutations in a live account — the
+second affects the whole tenant. Never click a control you have not read.
 
 If a goal has no obvious control on the page, say so and ask the developer what
 they see. That is faster and safer than guessing.
 
-## Step 1 — Create the Azure Bot
+## Step 1 — Create the bot
 
-At `portal.azure.com`, create an **Azure Bot** for the Channel.
+`dev.teams.microsoft.com` → **Tools → Bot management → New bot**.
 
-Two choices are not defaults to weigh — the Intelligence Teams adapter expects
-both:
+The dialog asks for **a name and nothing else** — no subscription, no resource
+group, no region, no pricing tier. Creating it also creates the matching Entra app
+registration.
 
-- **Single-tenant** Microsoft Entra app.
-- **Client-secret** authentication (not managed identity, not certificate).
+Two facts that save a wrong turn later:
 
-Creating the Azure Bot creates or attaches an Entra app registration. That app is
-the identity Teams and Intelligence both authenticate against, so keep track of
-which app registration belongs to this bot — a tenant with several bots will have
-several similarly named apps.
+- **The bot's ID is the Entra app's Application (client) ID.** They are the same
+  value, so the ID in the bot's URL is what step 3 wants. Confirmed against
+  Entra → App registrations → Owned applications.
+- **Microsoft Teams is already enabled** on a Developer-Portal-created bot. Check
+  it under the bot's **Channels**, but expect it to be checked.
 
-**If there is no Azure subscription, stop here.** An Azure Bot is a billed Azure
-resource. Directory or tenant ownership does not supply one; Azure subscriptions
-are a separate billing artifact from Entra roles. Say so plainly and let the
-developer resolve access rather than looking for a way around it.
+A tenant with several bots will have several similarly named app registrations,
+so keep track of which one belongs to this bot.
 
 ## Step 2 — Point the bot at Intelligence
 
-In the bot's **Configuration**:
+On the bot's **Configure** page:
 
-1. Set **Messaging endpoint** to the Teams messaging endpoint shown in the
+1. Set **Endpoint address** to the Teams messaging endpoint shown in the
    Intelligence dashboard's Teams setup step. It sits on the path
    `/api/channels/adapters/teams/messages`. **Copy it from the dashboard** rather
    than composing it by hand — the host is environment-specific, and a wrong
    endpoint means no Teams activity ever reaches Intelligence, with no error
    anywhere in your own logs.
-2. Enable the **Microsoft Teams** channel on the bot.
+2. Save. A successful save reports *"Bot &lt;name&gt; updated successfully."*
+3. Confirm **Channels → Microsoft Teams** is checked.
 
-Both are required. A bot with the right endpoint and no Teams channel enabled
-looks configured and delivers nothing.
+Both matter. A bot with the right endpoint and no Teams channel enabled looks
+configured and delivers nothing.
 
 ## Step 3 — Collect the three credentials
 
