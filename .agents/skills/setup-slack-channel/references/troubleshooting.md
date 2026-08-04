@@ -222,8 +222,7 @@ of dashboard clicking:
    derived from the API URL. Override **both or neither**, as bare base URLs
    with no `/api` or `/socket` path. Setting only one silently leaves the other
    pointed at the managed host, and a wrong ws URL does not raise — it hangs in
-   `connecting`. For this skill's scope, leave both unset so they default to
-   production.
+   `connecting`. For this skill's scope, leave both unset.
 
 ## Dashboard fields that lie, and the one that doesn't
 

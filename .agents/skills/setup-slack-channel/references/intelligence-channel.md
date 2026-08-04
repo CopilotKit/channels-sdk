@@ -3,22 +3,24 @@
 This phase is **entirely browser work, in the developer's own signed-in session**.
 No command creates a project, a Channel, an API key, or a Slack adapter.
 
-The dashboard is at **`https://intelligence.copilotkit.ai`** — the URL documented
-in a comment in the starter's `.env.example`. Confirm it from the app you are
-setting up rather than assuming. Note that `INTELLIGENCE_API_URL` is **not** in
-OpenTag's `.env.example`; it exists only as a default constant in `app/env.ts`
-(alongside `INTELLIGENCE_GATEWAY_WS_URL`), and both should be left unset.
+Use the public Intelligence web app at
+**`https://intelligence.copilotkit.ai`**. The URL is documented in a comment in
+the starter's `.env.example`. Confirm it from the app you are setting up rather
+than assuming. Note that `INTELLIGENCE_API_URL` is **not** in OpenTag's
+`.env.example`; it exists only as a default constant in `app/env.ts` (alongside
+`INTELLIGENCE_GATEWAY_WS_URL`), and both should be left unset.
 
 ## The wizard, and the labels it actually uses
 
 There is **no published dashboard walkthrough** for managed Channels — the Slack
 platform page in the public docs covers only the direct adapter. So confirm what
-you see rather than inventing labels. As of dashboard `0.10.1`, **Create a
-channel** is a three-step wizard:
+you see rather than inventing labels. As of dashboard `0.10.1`, create or open a
+project, go to that project's **Channels** tab, and click **Create channel** to
+open the **Create a channel** wizard. The wizard has three steps:
 
 | Step | What it contains |
 | --- | --- |
-| **Name & platforms** | **Display name** (free text) and **Code** (auto-derived, read-only unless you click Edit). Platform cards: Slack and Teams selectable; Google Chat, Discord, WhatsApp, Telegram, iMessage, SMS marked coming soon. |
+| **Name & platforms** | **Display name** (free text) and **Code** (auto-derived, read-only unless you click Edit). Platform cards include Slack; other platforms may be unavailable, plan-gated, or marked coming soon. |
 | **Setup** | The generated Slack app manifest, plus **Bot token \*** and **Signing secret \*** (both `type="password"`), plus the `/invite @<code>` line. |
 | **Review** | The runtime handoff snippet showing `createChannel({ name: '<code>' })`, and the **Create channel** button. |
 
@@ -29,7 +31,9 @@ over, so do the Slack app work in a *second tab* and keep the wizard open.
 `createChannel({ name })` declares," and enforces 3–64 chars, starting with a
 lowercase letter, lowercase alphanumerics separated by single hyphens (`channels`
 is reserved). It derives from the Display name, so `Jerel-Bot` becomes
-`jerel-bot`. A friendly Display name with a kebab-case Code is exactly right.
+`jerel-bot`. Do not predict or normalize the Code yourself; copy the generated
+Code exactly into the app's Channel-name environment variable. A friendly Display
+name with a kebab-case Code is exactly right.
 
 Because these are consequential mutations in a live account: **read the page, state
 what you are about to change, get an explicit yes, then act.**
@@ -56,11 +60,9 @@ check all four rather than assuming:
 3. **The Channel and the API key belong to the same project.** The key selects the
    project; a key from another project activates a different Channel set entirely
    and looks like a name mismatch.
-4. **The endpoint defaults are untouched.** Leave `INTELLIGENCE_API_URL` and
-   `INTELLIGENCE_GATEWAY_WS_URL` unset so both default to production. If an
-   inherited `.env` points either at `dev.intelligence.copilotkit.ai`, that is out
-   of scope — say so and stop rather than silently validating the wrong
-   environment.
+4. **The endpoint variables are absent.** Leave `INTELLIGENCE_API_URL` and
+   `INTELLIGENCE_GATEWAY_WS_URL` unset for this workflow. If either one is
+   present in an inherited `.env`, pause and remove it before validating setup.
 
 ## The order to do it in
 
@@ -123,9 +125,9 @@ Never run a laptop runtime against a Channel a deployed service is serving.
 
 ## If the dashboard cannot do what this phase needs
 
-Managed Channels are **enabled by default on production Intelligence for
-everyone**, so expect creating a Channel and attaching Slack to be available. If
-they are not — with all four alignments verified you see any of:
+Managed Channels are **enabled by default in the public Intelligence web app**,
+so expect creating a Channel and attaching Slack to be available. If they are
+not — with all four alignments verified you see any of:
 
 - no option to attach a Slack platform to a Channel at all,
 - no way to create a Channel in the project, or
@@ -135,10 +137,8 @@ then this is **unexpected**, not a known limitation to route around. **Stop and
 say so plainly**, with what you observed: it is an account or platform question
 for the CopilotKit team.
 
-Do **not** respond by switching to a direct Slack adapter, and do not point the
-runtime at a non-production Intelligence environment. Both are out of scope, and
-both mean the developer ends up validating something other than what they asked
-about. Report the blocker and let them decide.
+Do **not** respond by switching to a direct Slack adapter. Report the blocker
+and let the developer decide.
 
 ## Things that are not required
 
