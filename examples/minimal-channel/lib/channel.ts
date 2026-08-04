@@ -9,7 +9,12 @@ const channel = createChannel({
 });
 
 channel.onMention(async ({ thread, message }) => {
-  await thread.post(`🪁`);
+  await thread.subscribe();
+  await thread.runAgent();
+});
+
+channel.onMessage(async ({ thread, message }) => {
+  if (await thread.isSubscribed()) await thread.runAgent();
 });
 
 export { channel };
