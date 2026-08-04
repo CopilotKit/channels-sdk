@@ -28,9 +28,9 @@ misconfigured Slack app installs cleanly and answers nothing.
 
 Two consequences:
 
-- **No tunnel and no URL of your own is needed** — but not because of Socket Mode.
-  It is because *Intelligence* owns the Request URL, and because the second leg
-  is outbound from your machine.
+- **No tunnel and no public URL of your own is needed** — but not because of Socket
+  Mode. It is because *Intelligence* owns the public URL, and because the second
+  leg is outbound from your machine.
 - **Socket Mode is off, and there is no `xapp-` app-level token in this workflow at
   all.** A managed Slack app needs `socket_mode_enabled: false` and a
   `request_url`. If you create the app with Socket Mode on and no Request URL, no
@@ -162,8 +162,9 @@ falls back to `onMessage`, while a **non-mentioned** turn goes only to
 does not flag as a mention. **Verify with a channel mention first**; it is the
 path every starter registers. Details in `references/troubleshooting.md`.
 
-Confirm before continuing: `https://intelligence.copilotkit.ai`, a dedicated
-Slack app, and a workspace where they can install it.
+Confirm before continuing: the public Intelligence web app at
+`https://intelligence.copilotkit.ai`, a dedicated Slack app, and a workspace
+where they can install it.
 
 ## Phase 1 — Workspace, and start the Channel wizard to get the manifest
 

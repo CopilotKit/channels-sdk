@@ -2,12 +2,12 @@
 
 Two processes for the `examples/OpenTag` starter: a **Python AG-UI agent** and a
 **Node runtime** that hosts the Channel. The runtime dials **out** to Intelligence
-over a websocket — nothing inbound to your machine, so no tunnel and no URL of
-your own.
+over a websocket — nothing inbound to your machine, so no tunnel and no public URL
+of your own.
 
 Be precise about why: the *runtime↔Intelligence* leg is an outbound websocket, and
-the *Slack↔Intelligence* leg is Slack posting HTTPS to Intelligence's Request
-URL. Neither leg needs a tunnel, and neither leg uses Socket Mode. The
+the *Slack↔Intelligence* leg is Slack posting HTTPS to Intelligence's own public
+Request URL. Neither leg needs a tunnel, and neither leg uses Socket Mode. The
 runtime's HTTP port (below) exists for health/serving, not for receiving Slack
 events — nothing from Slack ever hits it.
 
