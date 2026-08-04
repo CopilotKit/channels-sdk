@@ -49,21 +49,11 @@ Choose a platform, join the experience, and see how an agent handles context, to
 
 ### Start with a prompt
 
-Slack setup spans a Slack app, a workspace install, a managed Channel, and a local runtime. Install the CopilotKit skills and your coding agent walks all of it with you.
-
-In the directory where you want the project:
+One command, then one paste. Run this in the directory where you want the project:
 
 ```sh
 npx copilotkit@latest skills install
 ```
-
-Or install just the Slack skill:
-
-```sh
-npx copilotkit@latest skills install --skill setup-slack-channel
-```
-
-> **`Unknown option '--skill'`?** An older `copilotkit` — globally installed or left in the npx cache — is shadowing the current CLI. Keep the `@latest`; that is what forces npx to fetch the current version instead of reusing what it already has.
 
 <details>
 <summary><b>Then paste this prompt into your coding agent — it goes from a new project to a working Slack channel</b></summary>
@@ -102,6 +92,16 @@ Start by reading the three skills, then tell me which are available, what you fo
 Already have a project? Use the **Build it with your coding agent** prompt at the end of this section instead — it adds a Channels listener to code you already have.
 
 </details>
+
+Slack setup spans a Slack app, a workspace install, a managed Channel, and a local runtime. The skills are what walk your agent through all of it — the prompt reads three of them, so install them all rather than narrowing to one.
+
+Setting up Slack for a project you already have? The Slack skill alone is enough:
+
+```sh
+npx copilotkit@latest skills install --skill setup-slack-channel
+```
+
+> **`Unknown option '--skill'`?** An older `copilotkit` — globally installed or left in the npx cache — is shadowing the current CLI. Keep the `@latest`; that is what forces npx to fetch the current version instead of reusing what it already has.
 
 ### Or set it up by hand
 
