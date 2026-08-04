@@ -3,17 +3,15 @@
 This phase is **entirely browser work, in the developer's own signed-in session**.
 No command creates a project, a Channel, an API key, or a Slack adapter.
 
-Use the public Intelligence web app at
-**`https://intelligence.copilotkit.ai`**. The URL is documented in a comment in
-the starter's `.env.example`. Confirm it from the app you are setting up rather
-than assuming. Note that `INTELLIGENCE_API_URL` is **not** in OpenTag's
-`.env.example`; it exists only as a default constant in `app/env.ts` (alongside
-`INTELLIGENCE_GATEWAY_WS_URL`), and both should be left unset.
+Use **`https://intelligence.copilotkit.ai`**. Note that `INTELLIGENCE_API_URL` is
+**not** in OpenTag's `.env.example`; it exists only as a default constant in
+`app/env.ts` (alongside `INTELLIGENCE_GATEWAY_WS_URL`), and both should be left
+unset.
 
 ## The wizard, and the labels it actually uses
 
 There is **no published dashboard walkthrough** for managed Channels — the Slack
-platform page in the public docs covers only the direct adapter. So confirm what
+platform page in the docs covers only the direct adapter. So confirm what
 you see rather than inventing labels. As of dashboard `0.10.1`, create or open a
 project, go to that project's **Channels** tab, and click **Create channel** to
 open the **Create a channel** wizard. The wizard has three steps:
@@ -125,9 +123,9 @@ Never run a laptop runtime against a Channel a deployed service is serving.
 
 ## If the dashboard cannot do what this phase needs
 
-Managed Channels are **enabled by default in the public Intelligence web app**,
-so expect creating a Channel and attaching Slack to be available. If they are
-not — with all four alignments verified you see any of:
+Managed Channels are available at **`https://intelligence.copilotkit.ai`**, so
+expect creating a Channel and attaching Slack to be available. If they are not —
+with all four alignments verified you see any of:
 
 - no option to attach a Slack platform to a Channel at all,
 - no way to create a Channel in the project, or
