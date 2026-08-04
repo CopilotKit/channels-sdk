@@ -6,7 +6,7 @@
 
 **Bring any AI agent into Slack, Microsoft Teams, and the channels where work happens — with native, interactive UI.**
 
-[**Try Channels**](https://www.copilotkit.ai/try-channels) · [**Build with the SDK**](#build-your-first-channel) · [**Explore OpenTag**](#see-a-complete-channels-app)
+[**Try Channels**](https://www.copilotkit.ai/try-channels) · [**Start with a prompt**](#start-with-a-prompt) · [**Build with the SDK**](#build-your-first-channel) · [**Explore OpenTag**](#see-a-complete-channels-app)
 
 [![npm](https://img.shields.io/npm/v/@copilotkit/channels.svg?label=%40copilotkit%2Fchannels)](https://www.npmjs.com/package/@copilotkit/channels)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -47,25 +47,65 @@ Choose a platform, join the experience, and see how an agent handles context, to
 
 ## Build your first Channel
 
-Your agent and application logic run in your infrastructure. CopilotKit Intelligence manages the platform connection and delivers each turn to your long-running Channels process.
+### Start with a prompt
 
-### Fastest path for Slack: install the skill and let your coding agent drive
-
-Slack setup spans a Slack app, a workspace install, a managed Channel, and a local runtime. Install the `setup-slack-channel` skill and your coding agent walks all of it with you:
-
-```sh
-npx copilotkit@latest skills install --skill setup-slack-channel
-```
-
-Or install every CopilotKit skill at once:
+One command, then one paste. Run this in the directory where you want the project:
 
 ```sh
 npx copilotkit@latest skills install
 ```
 
-Then ask your agent to set up Slack. The steps below are the same path, done by hand.
+<details>
+<summary><b>Then paste this prompt into your coding agent — it goes from a new project to a working Slack channel</b></summary>
+
+```text
+Help me create a new CopilotKit app from scratch, then connect its agent to Slack so it answers in a real channel.
+
+Use these skills as your instructions, in this order:
+- `copilotkit-setup` for creating the app and wiring managed Intelligence.
+- `copilotkit-channels` for the CLI-scaffolded Channel and its long-running host.
+- `setup-slack-channel` for the Slack app and managed Intelligence provider setup.
+
+Read all three before you plan anything, and follow them rather than working from memory. If any skill is not installed, stop and tell me to run `npx copilotkit@latest skills install` in the directory where I want the project, then wait for me. Do not attempt the setup without them.
+
+Use the CopilotKit CLI through `npx copilotkit@latest`; do not assume or require a global CLI installation. Before you start, verify that Node.js 20 or newer is available. If it is not, stop and tell me what I need to install.
+
+When you implement the plan:
+- Run `npx copilotkit@latest create` to scaffold a brand-new project. Ask me for the project name and framework instead of choosing them for me.
+- Choose managed Intelligence because Channels are not available in self-hosted SSE mode. Follow the CLI's current prompts rather than guessing undocumented flags.
+- Treat the CLI-generated `channel-host.mts` and `channels.mts` as the code half. Do not add a second Channel declaration or move the Channel into a serverless route.
+- Use `setup-slack-channel` for the provider half, including the dedicated Slack app, managed Channel, credentials, and real workspace verification. Do not replace the managed path with a direct Slack adapter.
+
+Before your first step, tell me which mode you are in:
+- You can drive a browser yourself. Then do so, and confirm with me before each consequential change in a live account — signing in, creating an Intelligence project, creating the Slack app, attaching the adapter, or issuing a key.
+- You cannot. Then say so plainly and walk me through the browser steps one at a time, waiting for me to confirm each before you continue.
+
+Do not guess which one you are. Check what tools you actually have.
+
+Rules for the whole run:
+- Never ask me to paste a token, signing secret, or API key into this conversation. They go into the Intelligence dashboard and my `.env`, typed by me.
+- Do not report success until all three gates in `setup-slack-channel` hold. "The runtime started" is not one of them.
+
+Start by reading the three skills, then tell me which are available, what you found in the current directory, which browser mode you are in, and what you plan to do.
+```
+
+Already have a project? Use the **Build it with your coding agent** prompt at the end of this section instead — it adds a Channels listener to code you already have.
+
+</details>
+
+Slack setup spans a Slack app, a workspace install, a managed Channel, and a local runtime. The skills are what walk your agent through all of it — the prompt reads three of them, so install them all rather than narrowing to one.
+
+Setting up Slack for a project you already have? The Slack skill alone is enough:
+
+```sh
+npx copilotkit@latest skills install --skill setup-slack-channel
+```
 
 > **`Unknown option '--skill'`?** An older `copilotkit` — globally installed or left in the npx cache — is shadowing the current CLI. Keep the `@latest`; that is what forces npx to fetch the current version instead of reusing what it already has.
+
+### Or set it up by hand
+
+The steps below are the same path, done manually. Your agent and application logic run in your infrastructure. CopilotKit Intelligence manages the platform connection and delivers each turn to your long-running Channels process.
 
 ### 1. Configure the connection
 
