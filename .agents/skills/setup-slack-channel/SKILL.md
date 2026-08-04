@@ -72,8 +72,8 @@ do not argue with the runtime.
 
 ## Scope — read before planning
 
-**In scope:** `https://intelligence.copilotkit.ai`; a managed Channel; a
-dedicated Slack app created from a manifest; a local runtime and agent.
+**In scope:** production CopilotKit Intelligence; a managed Channel; a dedicated
+Slack app created from a manifest; a local runtime and agent.
 
 **Out of scope in v1. These are hard limits, not defaults to weigh:**
 
@@ -84,7 +84,7 @@ dedicated Slack app created from a manifest; a local runtime and agent.
 - **Do not reuse, reinstall, or modify a Slack app that is already installed and
   in use.** Create a dedicated one.
 - Do not deploy anything (Railway or otherwise).
-- Use `https://intelligence.copilotkit.ai` for Intelligence setup.
+- Do not target internal or dev Intelligence environments.
 - Do not enumerate the Slack workspace, search channels, or request scopes beyond
   the manifest.
 
@@ -162,9 +162,8 @@ falls back to `onMessage`, while a **non-mentioned** turn goes only to
 does not flag as a mention. **Verify with a channel mention first**; it is the
 path every starter registers. Details in `references/troubleshooting.md`.
 
-Confirm before continuing: the public Intelligence web app at
-`https://intelligence.copilotkit.ai`, a dedicated Slack app, and a workspace
-where they can install it.
+Confirm before continuing: production Intelligence, a dedicated Slack app, and a
+workspace where they can install it.
 
 ## Phase 1 — Workspace, and start the Channel wizard to get the manifest
 
@@ -174,11 +173,9 @@ manifest.** Do not hand-write one, and do not use the starter's
 
 1. No usable workspace → create a free one, or a Slack Developer Program sandbox.
    Never test in a workspace where an unapproved bot would be disruptive.
-2. In the Intelligence dashboard, create or open a project. From that project's
-   **Channels** tab, click **Create channel** to open the **Create a channel**
-   wizard. Enter a **Display name**; the wizard derives the **Code** from it —
-   lowercase kebab-case, and the Code is what `createChannel({ name })` must
-   declare. Select **Slack**.
+2. In the Intelligence dashboard, start **Create a channel**. Enter a **Display
+   name**; the wizard derives the **Code** from it — lowercase kebab-case, and the
+   Code is what `createChannel({ name })` must declare. Select **Slack**.
 3. Advance to **Setup**. That step contains a generated manifest ("Copy manifest" /
    "View manifest YAML") already pointed at the right Request URL, plus the two
    credential fields you will fill in Phase 3. **Nothing is saved until you
@@ -212,7 +209,7 @@ Full detail in `references/slack-workspace-and-app.md`. The shape:
 Back in the open wizard tab. Browser work, in the developer's own session. Four
 things must line up: Channel Code matches what the code declares, the Slack
 adapter reports connected, Channel and API key in the **same project**, endpoints
-left unset.
+left at their production defaults.
 
 The developer types the bot token and signing secret into the **Setup** step
 themselves, then Review → create. Then issue a project-scoped API key and have

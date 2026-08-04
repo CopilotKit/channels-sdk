@@ -55,13 +55,8 @@ The developer fills these in themselves:
 | `AGENT_URL` | Yes | The AG-UI endpoint. OpenTag's local agent is `http://localhost:8123/` |
 | `OPENAI_API_KEY` | Yes for OpenTag's agent | Model access for the Python agent |
 | `INTELLIGENCE_CHANNEL_NAME` | No | Defaults to `open-tag`. Must equal the dashboard Channel's name. |
-| `INTELLIGENCE_API_URL` / `INTELLIGENCE_GATEWAY_WS_URL` | No | **Leave unset** for this workflow. |
+| `INTELLIGENCE_API_URL` / `INTELLIGENCE_GATEWAY_WS_URL` | No | **Leave unset.** They default to production. |
 | `PORT` | No | Runtime HTTP port, default 3000 |
-
-If the dashboard's **Connect a runtime** modal shows blank endpoint lines such as
-`INTELLIGENCE_API_URL=` or `INTELLIGENCE_GATEWAY_WS_URL=`, do **not** copy those
-blank lines into OpenTag's `.env`. In this app, a blank env var is still treated
-as an explicit override. Leave those variables absent.
 
 Verify by presence only:
 
